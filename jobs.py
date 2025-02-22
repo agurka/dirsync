@@ -52,7 +52,7 @@ def add_job(args):
 
     src = os.path.abspath(args["src"])
     dest = os.path.abspath(args["dest"])
-    log = args["logfile"]
+    log = os.path.abspath(args["logfile"])
 
     if job_filename in os.listdir(job_dir):
         print(
