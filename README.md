@@ -22,5 +22,5 @@ You should not need to run a job manually. But if you want to, run `./dirsync ru
 
 ### List all jobs
 
-To see all jobs, use `./dirsync jobs`.  
+To see all jobs, use `./dirsync jobs`  
 You can optionally provide a job name, to see a specific job configuration: `./dirsync jobs <job name>`
