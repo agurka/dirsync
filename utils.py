@@ -7,6 +7,10 @@ import filecmp
 import argparse
 
 
+def get_scheduled_task_name(job_name):
+    return f"dirsync-{job_name}"
+
+
 def set_logging(args, job):
     logging_setup = {
         "level": get_log_levels().get(args["verbosity"]),
@@ -60,6 +64,10 @@ def parse_args():
     setup_parser.add_argument("src", help="source directory")
     setup_parser.add_argument("dest", help="destination directory")
     setup_parser.add_argument(
+        "scheduling",
+        help="platform-specific scheduling (cron or windows task scheduler string)",
+    )
+    setup_parser.add_argument(
         "-l",
         "--logfile",
         help="path to log file. If not provided, no logs will be stored.",
@@ -101,7 +109,9 @@ def get_job_by_name(jobname):
     job_filename = f"{jobname}.json"
 
     all_jobs = os.listdir(job_dir)
-    assert job_filename in all_jobs, f"job '{jobname}' does not exist"
+    if job_filename not in all_jobs:
+        logging.error(f"job '{jobname}' does not exist")
+        sys.exit(1)
 
     with open(f"{os.path.join(job_dir, job_filename)}") as jf:
         return json.load(jf)
