@@ -12,26 +12,22 @@ def get_scheduled_task_name(job_name):
 
 
 def set_logging(args, job):
-    logging_setup = {
-        "level": get_log_levels().get(args["verbosity"]),
-        "format": "%(asctime)s - %(levelname)s - %(message)s",
-        "datefmt": "%Y-%m-%d %H:%M:%S",
-    }
-
+    log_level = get_log_levels().get(args["verbosity"])
+    log_format = "%(asctime)s - %(levelname)s - %(message)s"
+    date_format = "%Y-%m-%d %H:%M:%S"
     logfile = job.get("logfile")
-    if args["command"] == "setup":
-        if logfile:
-            logging_setup["filename"] = logfile
-        else:
-            print(
-                "No logfile provided on job creation. Logs for this job will not be stored to a file"
-            )
 
-    if args["command"] == "run":
-        if logfile:
-            logging_setup["filename"] = logfile
+    logging.basicConfig(level=log_level, format=log_format, datefmt=date_format)
 
-    logging.basicConfig(**logging_setup)
+    if logfile:
+        file_handler = logging.FileHandler(logfile)
+        file_handler.setLevel(log_level)
+        file_handler.setFormatter(logging.Formatter(log_format, date_format))
+        logging.getLogger().addHandler(file_handler)
+    else:
+        logging.warning(
+            "No logfile provided on job creation. Logs for this job will not be stored to a file"
+        )
 
 
 def get_log_levels():

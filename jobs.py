@@ -78,7 +78,7 @@ def schedule_job(args, script_path):
     scheduling = args["scheduling"]
 
     job_name = args["job"]
-    command = f"python {script_path} run {job_name}"
+    command = f"python {script_path} -v {args.get('verbosity')} run {job_name}"
     task_name = utils.get_scheduled_task_name(job_name)
     if os.name == "nt":
         schedule_cmd = [
