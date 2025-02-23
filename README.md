@@ -6,15 +6,11 @@ Python script for synchronising 2 directories. No dependencies outside of standa
 
 ### Job creation
 
-To create a job, use  
 `./dirsync.py setup <job name> <source directory> <destination directory> <scheduling>`
 
 ### Job deletion
 
-To remove a job, either:
-
-- `./dirsync.py jobs -r <job name>`
-- remove the job file (`~/.config/dirsync/jobs` for Linux-based systems, `%APPDATA%\\dirsync\\jobs` on Windows)
+`./dirsync.py jobs -r <job name>`
 
 ### Running a job
 
