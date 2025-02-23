@@ -7,7 +7,7 @@ Python script for synchronising 2 directories. No dependencies outside of standa
 ### Job creation
 
 To create a job, use  
-`./dirsync.py setup <job name> <source directory> <destination directory> <cron>`
+`./dirsync.py setup <job name> <source directory> <destination directory> <scheduling>`
 
 ### Job deletion
 
@@ -24,3 +24,7 @@ You should not need to run a job manually. But if you want to, run `./dirsync ru
 
 To see all jobs, use `./dirsync jobs`  
 You can optionally provide a job name, to see a specific job configuration: `./dirsync jobs <job name>`
+
+## Scheduling
+
+Running the job on schedule is handled by the system. Whatever you pass to the `scheduling` argument gets passed either to `crontab` on Linux or `schtasks` on Windows
