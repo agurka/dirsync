@@ -49,6 +49,12 @@ def remove_job(args):
     job_filepath = os.path.join(job_dir, job_filename)
     logging.info(f"Removing job {job_filepath}")
     os.remove(job_filepath)
+
+    job = utils.get_job_by_name(job_name)
+    logfile = job.get("logfile")
+    if logfile:
+        os.remove(logfile)
+
     return True
 
 
