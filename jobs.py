@@ -62,10 +62,14 @@ def remove_job_from_schedule(args):
             task_name,
             "/F",
         ]
+    else:
+        cmd = f"crontab -l | grep -v '{task_name}' | crontab -"
 
     try:
         if os.name == "nt":
             subprocess.run(cmd, check=True)
+        else:
+            subprocess.run(cmd, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         logging.error(f"error descheduling job: {e}")
 
@@ -89,7 +93,7 @@ def schedule_job(args, script_path):
             "/F",
         ]
     else:
-        cron_entry = f"{cron_expr} {command} # {task_name}"
+        cron_entry = f"{scheduling} {command} # {task_name}"
         schedule_cmd = f'(crontab -l; echo "{cron_entry}") | crontab -'
     try:
         if os.name == "nt":
